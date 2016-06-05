@@ -23,7 +23,7 @@ capture NGS data}
 
 \Biocpkg{PureCN} is a purity and ploidy aware copy number caller for cancer
 samples inspired by the \software{ABSOLUTE} algorithm \cite{Carter2012}.  It
-was designed for hybrid caputure sequencing data, especially with medium-sized
+was designed for hybrid capture sequencing data, especially with medium-sized
 targeted gene panels without matching normal samples in mind.
 
 It can be used to enhance existing segmentation and normalization algorithms.
