@@ -19,4 +19,13 @@ test_runAbsoluteCN <- function() {
     # chromosomes in segmentation ordered numerically, not alphabetically
     chrom <- ret$results[[1]]$seg$chrom
     checkEqualsNumeric(1:22,chrom[!duplicated(chrom)])
+
+    # test with gc.gene.file without symbols
+    gc2 <- read.delim(gc.gene.file, as.is=TRUE)[,-3]
+    write.table(gc2, file="tmp.gc", row.names=FALSE, sep="\t", quote=FALSE)
+    ret <-runAbsoluteCN(gatk.normal.file=gatk.normal.file, 
+        gc.gene.file="tmp.gc",
+        gatk.tumor.file=gatk.tumor.file, 
+        candidates=purecn.example.output$candidates, 
+        vcf.file=vcf.file, genome="hg19", max.candidate.solutions=2)
 }    

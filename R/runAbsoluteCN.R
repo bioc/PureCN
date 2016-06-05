@@ -279,6 +279,12 @@ post.optimize=FALSE,
         }
     }
 
+    if (!is.null(gc.gene.file) && is.null(gc.data$Gene) ) {
+        if (verbose) message("No Gene column in gc.gene.file.",
+            " You won't get gene-level calls.")
+        gc.gene.file <- NULL
+    }
+
     exon.gr <- GRanges(seqnames=gsub("24", "Y", gsub("23","X", tumor$chr)), 
         IRanges(start=tumor$probe_start,end=tumor$probe_end))
 
