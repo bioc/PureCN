@@ -559,5 +559,14 @@ max.exon.ratio) {
     x[is.na(x)] <- ls[is.na(x)]
     x
 }
-    
- 
+.readAndCheckVcf <- function(vcf.file, genome, check.db=TRUE, 
+    check.fa=TRUE) {
+    vcf <- readVcf(vcf.file, genome)
+    if (is.null(info(vcf)$DB) && check.db) {
+        stop(vcf.file, " has no DB info flag for dbSNP membership.")
+    }
+    if (is.null(geno(vcf)$FA) && check.fa) {
+        stop(vcf.file, " has no FA genome flag containing allelic fractions.")
+    }
+    vcf     
+}    
