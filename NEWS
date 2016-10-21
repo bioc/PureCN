@@ -3,6 +3,8 @@ Changes in version 1.2.1
 
 - Fix for floating point overflow when iterations was set to a high value
   (https://support.bioconductor.org/p/88053/)
+- Fix for bug in callAlterationsFromSegmentation (resulting in wrong
+  gene.mean, gene.max, gene.min values)
 - Check for overlapping intervals in readCoverageGatk  
 
   
