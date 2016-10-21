@@ -1056,7 +1056,7 @@ Fortunately, in most cancer types, such ambiguity is rather rare.
 \begin{description}
     \item[Noisy segmentation:] The default of 200 for \Rcode{max.segments} is
     calibrated for high quality and high coverage whole exome data. For whole
-    genome data or lower coverage data, this values needs to be re-calibrated.
+    genome data or lower coverage data, this value needs to be re-calibrated.
     In case the copy number data looks indeed noisy, please see the first FAQ.
     \item[High AT/GC dropout:] If the data is GC-normalized, then there might
     be issues with either the target intervals or the provided GC content.
