@@ -784,6 +784,7 @@ gatk.normal.file=NULL,
                 ML.Subclonal=subclonal), 
                 SNV.posterior=SNV.posterior, 
                 fraction.subclonal=subclonal.f, 
+                fraction.homozygous.loss=sum(li[which(C<0.01)])/sum(li),
                 gene.calls=NA, 
                 log.ratio.offset=log.ratio.offset))
         }

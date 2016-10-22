@@ -5,6 +5,7 @@ Changes in version 1.2.1
   (https://support.bioconductor.org/p/88053/)
 - Fix for bug in callAlterationsFromSegmentation (resulting in wrong
   gene.mean, gene.max, gene.min values)
+- Fix for rare crash in very heterogeneous samples 
 - Check for overlapping intervals in readCoverageGatk  
 
   
