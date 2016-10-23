@@ -115,10 +115,14 @@ format\footnote{\software{GATK} will generate additional columns and
     chr1:621096-622035  6294    9.16    
 \end{verbatim}
 
-The intervals define the captured genomic regions (targets) and are provided by the
-manufacturer of your capture kit\footnote{While \software{PureCN} can use a pool
-of normal samples to learn which intervals are reliable and which not, it is
-highly recommended to provide the correct intervals. Garbage in, garbage out.}.  
+The intervals define the captured genomic regions (targets) and are provided by
+the manufacturer of your capture kit\footnote{While \software{PureCN} can use a
+pool of normal samples to learn which intervals are reliable and which not, it
+is highly recommended to provide the correct intervals. Garbage in, garbage
+out.}.  Default parameters assume that these intervals do NOT include a
+"padding" to include flanking regions of targets. \software{PureCN} can include
+variants in flanking regions if the variant caller was run with interval
+padding (See Sections~\ref{seqofftarget} and \ref{faqinput}). 
 
 It is recommended to GC-normalize coverage (how this done is described later in
 Section~\ref{secgcbias}). The GC-content for each target is expected in
@@ -673,14 +677,18 @@ curation to compare how well high confidence germline (dbSNP) vs. somatic
 (COSMIC) variants fit a particular purity/ploidy combination.
 
 \section{Off-target reads}
+\label{seqofftarget}
 
 It is possible to use SNPs in off-target reads in the SNV fitting step by
-running \software{MuTect} without interval file and then setting the
-\Rfunction{runAbsoluteCN} argument \Rcode{remove.off.target.snvs} to
-\Rcode{FALSE}. We recommend a large pool of normals in this case and then
-generating SNP blacklists as described in Sections~\ref{artifactfiltering} and
-\ref{artifactfiltering2}.  Remember to also run all the normals in
-\software{MuTect} without interval file. 
+setting the \Rfunction{runAbsoluteCN} argument \Rcode{remove.off.target.snvs}
+to \Rcode{FALSE}.  An often better alternative to including all off-target
+reads is running \software{MuTect} with interval "padding" (between 50-100bp).
+Instead of including all off-target SNPs, this will only include SNPs in the
+flanking regions of targets with \Rcode{remove.off.target.snvs=FALSE} (see
+Section~\ref{faqinput}).
+
+We recommend a large pool of normals and generating SNP blacklists as described
+in Sections~\ref{artifactfiltering} and \ref{artifactfiltering2}. 
 
 \section{Output}
 
@@ -996,7 +1004,7 @@ Figure~\ref{figure/figureexample2-1}:
 \end{itemize}
 
 \paragraph{If you have trouble generating input data PureCN accepts, please check:}
-
+\label{faqinput}
 \begin{itemize}
     \item For problems related to generating valid coverage data, either consult
     the \software{GATK} manual for the \software{DepthOfCoverage} tool or
@@ -1017,7 +1025,27 @@ supported and well tested. A minimal example \software{MuTect} call would be:
     The default output file is the stats or call-stats file; this can be
 provided in addition to the required VCF file via \Rcode{args.filterVcf} in
 \Rfunction{runAbsoluteCN}. If provided, it may help \Biocpkg{PureCN} filter
-artifacts. This requires \software{MuTect} in version 1.1.7.  
+    artifacts. This requires \software{MuTect} in version 1.1.7. Note that this
+    \software {MuTect} call will keep all off-target calls. We recommend running
+    \software{MuTect} with interval file, but include flanking regions:
+    \begin{verbatim}
+    $JAVA -Xmx6g -jar $MUTECT \
+    --analysis_type MuTect -R $REFERENCE \
+    --dbsnp $DBSNP_VCF \
+    --cosmic $COSMIC_VCF \
+    --interval_padding 75 \
+    --L $INTERVAL_FILE \
+    -I:normal $BAM_NORMAL \
+    -I:tumor $BAM_TUMOR  \
+    -o $OUT/${ID}_bwa_mutect_stats.txt \
+    -vcf $OUT/${ID}_bwa_mutect.vcf
+    \end{verbatim}
+    We highly recommend finding good values for the \Rcode{interval\_padding}
+    argument for each assay. A good cutoff will maximize the number of
+    heterozygous SNPs and keep only an acceptable number of lower quality
+    calls. To include SNPs in the flanking regions, it is necessary to set
+    \Rcode{remove.off.target.snvs=FALSE}. Future versions will automatically
+    keep these variants.
 \end{itemize}
 
 \paragraph{Questions related to manual curation.}
