@@ -30,7 +30,7 @@
 #' log.ratio.adjusted <- adjustLogRatio(log.ratio, 0.65, 1.73)
 #' 
 #' @export adjustLogRatio
-adjustLogRatio <- function(ratio, purity, ploidy, is.log2 = TRUE, min.ratio = 0.004) {
+adjustLogRatio <- function(ratio, purity, ploidy, is.log2 = TRUE, min.ratio = 2^-8) {
     if (is.log2) ratio <- 2^ratio
     adjusted <- (purity * ploidy * ratio + 2 * (1 - purity) * ratio - 2 * (1 - purity)) / (purity * ploidy)
     adjusted <- pmax(min.ratio, adjusted)

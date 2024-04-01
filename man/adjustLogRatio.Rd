@@ -4,7 +4,7 @@
 \alias{adjustLogRatio}
 \title{Adjust tumor vs. normal coverage log ratio for tumor purity and ploidy}
 \usage{
-adjustLogRatio(ratio, purity, ploidy, is.log2 = TRUE, min.ratio = 0.004)
+adjustLogRatio(ratio, purity, ploidy, is.log2 = TRUE, min.ratio = 2^-8)
 }
 \arguments{
 \item{ratio}{Vector of log2 tumor vs normal coverage ratios.}
