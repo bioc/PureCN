@@ -1,3 +1,14 @@
+Changes in version 2.12.0
+-------------------------
+
+NEW FEATURES
+
+    o Added --num-eigen-vectors to PureCN.R to set the number of eigen vectors.
+      Tuning parameter for coverage normalization. Default should in most cases
+      be a good compromise between removing most normal noise and not
+      overfitting to pool of normal samples.
+
+
 Changes in version 2.10.0
 -------------------------
 
