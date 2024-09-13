@@ -7,6 +7,8 @@ NEW FEATURES
       Tuning parameter for coverage normalization. Default should in most cases
       be a good compromise between removing most normal noise and not
       overfitting to pool of normal samples.
+   o Added findHighQualitySNPs function to extract good SNPs from mapping bias 
+     database. 
 
 
 Changes in version 2.10.0
